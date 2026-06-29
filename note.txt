@@ -1,0 +1,23 @@
+Use the built in terminal in VsCode to interact with pcb boards
+Ctrl+P -> ESP-IDF: Open ESP-IDF Terminal
+
+To handle permission errors in linux
+sudo usermod -aG dialout $USERNAME
+newgrp dialout
+
+idf.py build
+idf.py flash - to run the example project (blinking LED)
+idf.py fullclean - to clear cache
+
+idf.py menucofig - to access the settings menu for the esp32
+After making a change in teh settings menu, Press S to save, make
+sure the sdkconfig file is confirmed that changes were made, Press Q
+to quit the menu
+
+idf.py openocd - to use the debugger (need the debugger board connected
+				      to the esp32 board)
+This command start a local server that figures out which esp32 chip you're
+using and tries to find a connection to the debugger board, and boots up the 
+connection. 
+
+To run the program use this command WITH OUTPUT ----> idf.py flash monitor
