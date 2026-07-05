@@ -1,0 +1,52 @@
+What is a port? 
+A port is an ID where a computer obtaines to access specific
+services and allows the connections to reach its correct
+destination.
+The range of existence of ports are range 0-65535
+0-1023 -> for common services like accessing web browsers
+1024-49151 -> for specific applications like databases (MYSQL 3306, SQL Server 1433)
+49152-65535 -> Temporarily assigns for client connections e.g when you open up
+	       a browser to website and your computer assings a port to establish 
+	       that connection.
+
+What is an IP/TCP?
+
+An IP makes sure the data being transferred across a network arrives at the correct
+destination.
+
+TCP (Transmission Control Protocol) establishes a connection between the sender and the reciever. TCP also let's data
+packets that are being transferred are assembled in the correct order.
+
+In the TCP stage, a three handsake process takes place. The sender sends an SYN which is an initial request packet to the reciever 
+to start the process. The reciver gets this packet and decides wether to accepts this request or not. If the reciver accpets the
+request packet, the reciever sends an approval packet to the sender. The approval packet is a SYN-ACK packet. Then the sender sends
+an ACK to confirm it got the approval packet and can then start sending data packets to the reciever.
+
+SOCKET_PROGAMMING BASICS
+
+File Descriptors
+
+E.g int server_file_descriptor, int client_file_descriptor
+
+A file descriptor is an integer that the OS hands to our process that
+we can use system calls on to read/write data (e.g, read(), write()) or
+otherwise modify
+
+We'll have the following file descriptors always by default: 0 (stdin),
+1(stdout), 2(stderr)
+
+We use file descriptors for both real files and for sockets
+
+Creating a TCP socket
+
+Use int socket() from sys/socket to create a socket. Will return 
+file descriptor on success or < 0 if fails
+
+The first parameter specifies domain to be in use. We'll use AF_INET 
+for now. 
+The second parameter is type which means we either do TCP or UDP 
+transfer
+The third parameter is protocol. We'll use 0 for now since we're 
+already using SOCK_STREAM and the program will figure it out itself
+
+

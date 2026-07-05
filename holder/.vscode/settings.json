@@ -4,7 +4,7 @@
   "idf.openOcdConfigs": [
     "board/esp32-wrover-kit-3.3v.cfg"
   ],
-  "idf.port": "detect",
+  "idf.port": "/dev/ttyUSB2",
   "idf.currentSetup": "/home/isaiah/.espressif/v6.0.1/esp-idf",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32"
@@ -14,5 +14,6 @@
     "--background-index",
     "--query-driver=**",
     "--compile-commands-dir=/home/isaiah/Desktop/VsCode/Projects/ESP32_Socket_Server/holder/build"
-  ]
+  ],
+  "idf.flashType": "JTAG"
 }

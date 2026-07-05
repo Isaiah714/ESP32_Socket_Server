@@ -1,6 +1,16 @@
 Use the built in terminal in VsCode to interact with pcb boards
 Ctrl+P -> ESP-IDF: Open ESP-IDF Terminal
 
+If you're trying to include a header file that you're supposed to have
+and VsCode isn't recognizning it, check the CMakeLists.txt file in the 
+main folders and type in REQUIRES <header file name> to make VsCode
+see it. Like the example explanation below \/
+
+When setting up a project for Iot, make sure to add REQUIRES lwip
+in the CMakeLists.txt in the main folder so you're able to include
+internet header files in other files as well and not just exclusive
+to main.c
+
 To handle permission errors in linux
 sudo usermod -aG dialout $USERNAME
 newgrp dialout
@@ -16,8 +26,35 @@ to quit the menu
 
 idf.py openocd - to use the debugger (need the debugger board connected
 				      to the esp32 board)
-This command start a local server that figures out which esp32 chip you're
+This command starts a local server that figures out which esp32 chip you're
 using and tries to find a connection to the debugger board, and boots up the 
 connection. 
 
 To run the program use this command WITH OUTPUT ----> idf.py flash monitor
+
+Make sure the Flash method to JTAG or it will result a serial error
+which will fail to communicate with the debugger board
+
+Running the program Issue (This happens everytime I boot up Vscode)
+
+I get a warning saying "failed to communicate with flash chip" followed with
+a fatal error saying "corrupted serial data"
+
+Commands I wrote down to rid of this error
+
+idf.py openocd flash
+idf.py openocd
+
+OPENOCD_COMMANDS="-c 'adapter speed 5000'" idf.py openocd flash 
+(I don't think this actually did anything, not fully sure though)
+idf.py openocd -c "adapter speed 5000" flash (Keeping this just in case) 
+
+idf.py flash
+idf.py flash monitor
+
+Then it started working again
+
+idf.py flash
+
+VERY IMPORTANT NOTE: Every time I did try to fix this error, I did it via
+the built in terminal in VsCode
