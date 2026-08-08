@@ -1,8 +1,14 @@
+What is a socket?
+A socket is an endpoint where data can be processed across a network.
+Client socket workflow
+To create a client socket, you call socket() and connect to a remote address
+by calling connect(), and to recieve data you call recv()
+
 What is a port? 
-A port is an ID where a computer obtaines to access specific
+A port is an ID where a computer obtaines access to specific
 services and allows the connections to reach its correct
 destination.
-The range of existence of ports are range 0-65535
+The range of existing ports are ranged 0-65535
 0-1023 -> for common services like accessing web browsers
 1024-49151 -> for specific applications like databases (MYSQL 3306, SQL Server 1433)
 49152-65535 -> Temporarily assigns for client connections e.g when you open up
@@ -18,9 +24,12 @@ TCP (Transmission Control Protocol) establishes a connection between the sender 
 packets that are being transferred are assembled in the correct order.
 
 In the TCP stage, a three handsake process takes place. The sender sends an SYN which is an initial request packet to the reciever 
-to start the process. The reciver gets this packet and decides wether to accepts this request or not. If the reciver accpets the
+to start the process. The reciver gets this packet and decides wether to accepts this request or not. If the reciver accepts the
 request packet, the reciever sends an approval packet to the sender. The approval packet is a SYN-ACK packet. Then the sender sends
 an ACK to confirm it got the approval packet and can then start sending data packets to the reciever.
+
+For embedded system, they use LwIP which uses the TCP/IP full stack, but tries to leave some extra memory to be used since
+you're working with microcontrollers. Memory needs to be rationed
 
 SOCKET_PROGAMMING BASICS
 

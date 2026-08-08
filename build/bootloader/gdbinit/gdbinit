@@ -1,0 +1,2 @@
+source /home/isaiah/Desktop/VsCode/Projects/ESP32_Socket_Server/build/bootloader/gdbinit/symbols
+source /home/isaiah/Desktop/VsCode/Projects/ESP32_Socket_Server/build/bootloader/gdbinit/connect

@@ -58,3 +58,78 @@ idf.py flash
 
 VERY IMPORTANT NOTE: Every time I did try to fix this error, I did it via
 the built in terminal in VsCode
+
+I got this piece of shit annoying ass error after coming back to this project a couple of weeks later
+These are notes from the AI that helped me fix this bullshit (I'm very pissed as I'm writing this wasted 2 hours of my life)
+(07/31/2026) 12:57PM
+
+================================================================================
+                     ESP-IDF & VS CODE TROUBLESHOOTING NOTES
+================================================================================
+
+1. FIX CLI / EIM PERMISSION DENIED (OS ERROR 13)
+--------------------------------------------------------------------------------
+Symptoms: 
+  - eim fails when saving installer configuration.
+  - "Error executing CLI: Configuration save failed Permission denied (os error 13)".
+
+Cause:
+  - Running eim inside system folders (e.g., /usr/bin) or previous usage of
+    'sudo' assigned root ownership to ~/.config or ~/.espressif files.
+
+Fix:
+  # 1. Restore ownership of tool & config folders back to your user account
+  sudo chown -R $USER:$USER ~/.espressif ~/.config
+
+  # 2. Always run the wizard from your HOME directory (NOT system folders)
+  cd ~
+  eim wizard --idf-features ide
+
+
+2. FIX MISSING ESP-IDF COMMANDS IN VS CODE
+--------------------------------------------------------------------------------
+Symptoms:
+  - "command 'espidf.createClassicMenuConfig' not found" error when running commands.
+  - "There is no data provider registered that can provide view data" in the sidebar.
+
+Cause:
+  - Extension failed to activate/initialize at startup due to missing path links.
+
+Fix:
+  1. Press Ctrl + Shift + P in VS Code.
+  2. Run: "Developer: Reload Window"
+  3. Run: "ESP-IDF: Select Current ESP-IDF Version" 
+     (or "ESP-IDF: Open ESP-IDF Installation Manager")
+  4. Select your active version (e.g., v6.0.2) to link VS Code back to eim.
+
+
+3. FIX HEADER INCLUDE ERRORS ("cannot open source file")
+--------------------------------------------------------------------------------
+Symptoms:
+  - Project builds successfully, but files show red squigglies under headers 
+    like <freertos/FreeRTOS.h> or <esp_wifi.h>.
+
+Cause:
+  - Project contains a .clangd file, making VS Code use the clangd language server.
+  - clangd checks the project root for compile_commands.json, but ESP-IDF 
+    generates it inside the build/ directory.
+
+Fix:
+  1. Open or create '.clangd' in your project root directory.
+  2. Add the following config to direct clangd into the build folder:
+
+     CompileFlags:
+       CompilationDatabase: "build"
+
+  3. Press Ctrl + Shift + P and run: "clangd: Restart language server"
+  4. If headers are still missing, rebuild the project once:
+     Ctrl + Shift + P -> "ESP-IDF: Build your project"
+
+
+--------------------------------------------------------------------------------
+QUICK CHEAT SHEET FOR NEXT TIME:
+  1. Check terminal working directory (make sure you are in ~ or project dir).
+  2. Fix permissions: sudo chown -R $USER:$USER ~/.espressif ~/.config
+  3. Reload VS Code window: Ctrl + Shift + P -> Developer: Reload Window
+  4. Verify .clangd points CompilationDatabase to "build".
+================================================================================

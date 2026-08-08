@@ -1,8 +1,0 @@
-menu "User Connection Configuration"
-    config SSID
-        string SSID
-        default "PadillaHouseFam"
-    config PASSWORD
-        string PASSWORD
-        default sparecard240
-endmenu
